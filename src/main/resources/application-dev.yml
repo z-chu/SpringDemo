@@ -1,0 +1,6 @@
+server:
+  port: 8080
+
+user:
+  userName: 大柱
+  sex: 答案大事

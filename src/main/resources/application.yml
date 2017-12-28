@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/friend_book
+    username: root
+    password: 8073
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
