@@ -1,15 +1,16 @@
 package com.zchu.friendbook.controller;
 
-import com.zchu.friendbook.data.BookRepository;
+import com.zchu.friendbook.dao.BookRepository;
 import com.zchu.friendbook.service.BookService;
-import com.zchu.friendbook.vo.Book;
+import com.zchu.friendbook.domain.Book;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.xml.ws.http.HTTPException;
 import java.util.List;
 
 @RestController
@@ -26,16 +27,22 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @ApiOperation(value="获取书籍列表", notes="")
     @GetMapping
     public List<Book> listBook() {
         return bookRepository.findAll();
     }
 
+    @ApiOperation(value="获取书籍详细信息", notes="根据url的id来获取用户详细信息")
+    @ApiImplicitParam(name = "id", value = "书籍ID", required = true, dataType = "Long")
     @GetMapping("/{id}")
     public Book getBook(@PathVariable("id") Long id) {
         return bookRepository.findOne(id);
     }
 
+
+    @ApiOperation(value="删除书籍", notes="根据url的id来删除信息")
+    @ApiImplicitParam(name = "id", value = "书籍ID", required = true, dataType = "Long")
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable("id") Long id) {
         bookRepository.delete(id);
@@ -47,11 +54,13 @@ public class BookController {
         return bookRepository.save(book);
     }
 
+    @ApiOperation(value="创建书籍", notes="根据Book对象创建书籍")
+    @ApiImplicitParam(name = "book", value = "用户详细实体book", required = true, dataType = "Book")
     @PostMapping
     public Book addBook(@Valid @RequestBody Book book, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
             System.out.println(bindingResult.getFieldError().getDefaultMessage());
-            return null;
+            throw new HTTPException(400);
         }
         return bookRepository.save(book);
     }

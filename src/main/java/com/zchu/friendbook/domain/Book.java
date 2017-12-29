@@ -1,4 +1,4 @@
-package com.zchu.friendbook.vo;
+package com.zchu.friendbook.domain;
 
 
 import javax.persistence.Entity;

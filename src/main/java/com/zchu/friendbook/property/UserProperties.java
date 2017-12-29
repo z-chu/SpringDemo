@@ -1,4 +1,4 @@
-package com.zchu.friendbook.bean;
+package com.zchu.friendbook.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
